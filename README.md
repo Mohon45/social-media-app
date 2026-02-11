@@ -1,50 +1,172 @@
-# Welcome to your Expo app 👋
+# Mini Social Feed App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A lightweight social media application built with React Native and Expo, featuring authentication, posts, likes, comments, and real-time push notifications.
 
-## Get started
+## Features
 
-1. Install dependencies
+- ✅ User Authentication (Login/Signup)
+- ✅ Feed with infinite scroll
+- ✅ Create text-only posts
+- ✅ Like/Unlike posts with optimistic updates
+- ✅ Comment on posts
+- ✅ Filter feed by username
+- ✅ Pull-to-refresh
+- ✅ Push notifications (Firebase Cloud Messaging)
+- ✅ TanStack Query for data management
 
-   ```bash
-   npm install
-   ```
+## Tech Stack
 
-2. Start the app
+- **React Native** with **Expo**
+- **Expo Router** for navigation
+- **TanStack Query** for data fetching and caching
+- **Axios** for API calls
+- **Firebase** for push notifications
+- **AsyncStorage** for local data persistence
 
-   ```bash
-   npx expo start
-   ```
+## Setup Instructions
 
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+### 1. Install Dependencies
 
 ```bash
-npm run reset-project
+npm install
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### 2. Configure Environment Variables
 
-## Learn more
+Create a `.env` file in the root directory:
 
-To learn more about developing your project with Expo, look at the following resources:
+```env
+API_BASE_URL=http://your-backend-url.com/api
+FIREBASE_API_KEY=your_firebase_api_key
+FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
+FIREBASE_PROJECT_ID=your_project_id
+FIREBASE_STORAGE_BUCKET=your_project.appspot.com
+FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+FIREBASE_APP_ID=your_app_id
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### 3. Firebase Setup
 
-## Join the community
+1. Create a Firebase project at [console.firebase.google.com](https://console.firebase.google.com)
+2. Enable Firebase Cloud Messaging (FCM)
+3. Download configuration files:
+    - `google-services.json` for Android → place in `android/app/`
+    - `GoogleService-Info.plist` for iOS → place in `ios/`
+4. Update `app.json` with Firebase plugin configuration
 
-Join our community of developers creating universal apps.
+### 4. Backend API Requirements
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Your backend should provide these endpoints:
+
+**Authentication:**
+
+- `POST /auth/login` - Login with email and password
+- `POST /auth/signup` - Create new account
+
+**Posts:**
+
+- `GET /posts?page=1&limit=10&username=` - Get posts with pagination
+- `POST /posts` - Create new post
+- `POST /posts/:id/like` - Like a post
+- `DELETE /posts/:id/like` - Unlike a post
+
+**Comments:**
+
+- `GET /posts/:id/comments` - Get comments for a post
+- `POST /posts/:id/comments` - Add comment to a post
+
+**Notifications:**
+
+- `POST /notifications/register` - Register FCM token
+
+### 5. Run the App
+
+```bash
+# Start Expo development server
+npx expo start
+
+# Run on iOS
+npx expo start --ios
+
+# Run on Android
+npx expo start --android
+```
+
+## Project Structure
+
+```
+src/
+├── api/
+│   ├── client.js              # Axios instance with interceptors
+│   └── endpoints/             # API endpoint functions
+├── hooks/
+│   └── queries/               # TanStack Query hooks
+├── contexts/
+│   └── AuthContext.js         # Authentication state
+├── providers/
+│   └── QueryProvider.js       # TanStack Query setup
+├── screens/
+│   ├── auth/                  # Login & Signup
+│   └── feed/                  # Feed, Create Post, Comments
+├── components/                # Reusable UI components
+├── utils/                     # Utility functions
+└── constants/                 # Theme & configuration
+```
+
+## Key Features Implementation
+
+### TanStack Query
+
+- Infinite scroll for feed with automatic pagination
+- Optimistic updates for likes and comments
+- Automatic cache invalidation
+- Pull-to-refresh support
+
+### Authentication
+
+- JWT token-based authentication
+- Automatic token storage and retrieval
+- Auto-login on app start
+- Protected routes with conditional navigation
+
+### UI/UX
+
+- Beautiful gradient designs for auth screens
+- Smooth animations and transitions
+- Loading states and error handling
+- Empty states for better UX
+
+## Testing
+
+1. **Authentication Flow:**
+    - Test signup with valid/invalid data
+    - Test login with correct/incorrect credentials
+    - Verify token persistence
+
+2. **Feed Functionality:**
+    - Test infinite scroll
+    - Test pull-to-refresh
+    - Test username filtering
+    - Verify optimistic updates for likes
+
+3. **Post Creation:**
+    - Test character limit validation
+    - Verify post appears in feed
+
+4. **Comments:**
+    - Test adding comments
+    - Verify optimistic updates
+
+5. **Notifications (requires physical device):**
+    - Test FCM token registration
+    - Test receiving push notifications
+
+## Notes
+
+- The app uses mock data if backend is not configured
+- Push notifications require a physical device (won't work on simulator)
+- Update the API base URL in `.env` to point to your backend
+
+## License
+
+MIT
