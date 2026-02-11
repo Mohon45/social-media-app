@@ -170,3 +170,13 @@ src/
 ## License
 
 MIT
+
+## Screenshots
+
+<p align="center">
+  <img src="assets/images/Screenshot_20260211_230145_social-media.jpg" width="200" />
+  <img src="assets/images/Screenshot_20260211_230200_social-media.jpg" width="200" />
+  <img src="assets/images/Screenshot_20260211_230210_social-media.jpg" width="200" />
+  <img src="assets/images/Screenshot_20260211_230222_social-media.jpg" width="200" />
+  <img src="assets/images/Screenshot_20260211_230226_social-media.jpg" width="200" />
+</p>
