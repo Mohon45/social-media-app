@@ -2,6 +2,10 @@
 
 A lightweight social media application built with React Native and Expo, featuring authentication, posts, likes, comments, and real-time push notifications.
 
+**Test Credentials**
+Email : mdmohon6145@gmail.com
+password: admin@1
+
 ## Features
 
 - ✅ User Authentication (Login/Signup)
